@@ -1,73 +1,218 @@
-# Factors-Influencing-Student-Performance-with-SQL
-Analyze educational factors affecting performance using SQL datasets.
-# Project Overview
+# 🎓 Factors Influencing Student Performance with SQL & Machine Learning
 
-This project focuses on analyzing educational data to identify factors that influence student academic performance.
-The analysis is conducted using SQL-based data processing and querying techniques to ensure accuracy, scalability, and reproducibility.
+## Project Overview
 
-The project follows a structured, milestone-driven approach that covers data collection, exploration, analysis, automation, and documentation, simulating real-world data analytics workflows.
+This project analyzes factors that influence student academic performance using **SQL, Python, Data Analysis, and Machine Learning**.
 
-# Project Objectives
+The system loads student performance data into a SQLite database, performs analytical SQL queries, creates a dashboard for exploring student behaviors, and uses a Machine Learning model to predict exam scores based on student habits and characteristics.
 
-Analyze educational datasets to determine key factors affecting student performance
+The project combines:
 
-Apply SQL for data exploration, hypothesis testing, and analytical reporting
+- SQL data management and analysis
+- Interactive dashboard visualization
+- Machine Learning prediction
+- Automated performance summaries
 
-Develop reusable and automated database components
 
-Document insights in a clear, structured, and academic manner
+---
 
-# Project Milestones
-Milestone 1: Data Collection, Exploration & Preprocessing
+# Project Features
 
-Load educational datasets into a relational database
+## 1. SQL Database Management
 
-Explore data distributions, integrity, and missing values
+The project uses SQLite to store and analyze student performance data.
 
-Identify initial relationships between academic and demographic variables
+The database setup script:
 
-Milestone 2: System Development & Evaluation
+- Loads CSV data into SQLite
+- Cleans column names
+- Creates analytical SQL views
+- Generates automated performance summaries
 
-Build analytical SQL queries for hypothesis testing
 
-Analyze correlations and trends related to student performance
+Implemented SQL views:
 
-Evaluate results using aggregate functions, joins, and conditional logic
+### `view_campus_averages`
 
-Milestone 3: Deployment (Batch or Real-Time Analysis)
+Calculates overall campus metrics:
 
-Create SQL views and stored procedures for repeated analysis
+- Average study hours
+- Average social media usage
+- Average sleep hours
+- Average attendance
+- Average exam score
 
-Enable structured execution of analytical queries
 
-Milestone 4: Automation, Monitoring & Optimization
+### `view_factor_impact`
 
-Automate scheduled (nightly) query executions
+Analyzes how different factors influence exam performance:
 
-Monitor key performance indicators over time
+- Internet quality
+- Diet quality
+- Average scores
+- Number of students
 
-Prepare the system for future dataset updates
 
-Milestone 5: Final Documentation, Demonstration & Presentation
+### `nightly_performance_summary`
 
-Document analytical insights with clear SQL examples
+Simulates an automated batch process that tracks:
 
-# Tools & Technologies
+- Total students
+- Number of high performers
+- Number of students at academic risk
 
-SQL
 
-Relational Database Management System (e.g., MySQL / PostgreSQL)
 
-# Usage Instructions
+---
 
-Import the educational datasets into the database
+# Interactive Dashboard
 
-Execute preprocessing and exploration queries
+The project includes a Streamlit dashboard that allows users to:
 
-Run analytical queries and stored procedures
+### Student Performance Dashboard
 
-Review documented results and insights
+Search for students using Student ID and view:
 
-Summarize conclusions and findings
+- Exam score comparison
+- Attendance performance
+- Mental health rating
+- Part-time job status
+- Study hours comparison
+- Sleep and social media habits
+- Environmental factors
 
-Prepare demonstrations and presentation materials for evaluation
+
+### Data Visualization
+
+The dashboard provides:
+
+- Bar charts
+- Performance comparisons
+- Factor analysis
+- Campus average comparisons
+
+
+
+---
+
+# Machine Learning Model
+
+A Linear Regression model was implemented to predict student exam scores.
+
+## Model Input Features
+
+The model uses student-related features:
+
+### Numerical Features
+
+- Age
+- Study hours per day
+- Social media hours
+- Netflix hours
+- Attendance percentage
+- Sleep hours
+- Exercise frequency
+- Mental health rating
+
+
+### Categorical Features
+
+- Gender
+- Internet quality
+- Diet quality
+- Parental education level
+- Extracurricular participation
+- Part-time job
+
+
+
+---
+
+# Machine Learning Workflow
+
+The model follows these steps:
+
+1. Load student performance data
+2. Remove duplicates
+3. Handle missing target values
+4. Split data into training and testing sets
+5. Separate numerical and categorical features
+6. Handle missing values using imputation
+7. Scale numerical features using StandardScaler
+8. Encode categorical features using One-Hot Encoding
+9. Train Linear Regression model
+10. Evaluate performance using R² score
+
+
+
+---
+
+# Technologies & Tools Used
+
+## Programming Language
+
+- Python
+
+
+## Data Processing
+
+- Pandas
+- NumPy
+
+
+## Database
+
+- SQLite
+- SQL
+
+
+## Machine Learning
+
+- Scikit-learn
+    - Linear Regression
+    - Train/Test Split
+    - One Hot Encoder
+    - StandardScaler
+    - SimpleImputer
+
+
+## Dashboard & Visualization
+
+- Streamlit
+- Plotly
+
+
+## Development Tools
+
+- VS Code
+- Git & GitHub
+
+
+
+---
+# Project Structure
+
+```
+Factors-Influencing-Student-Performance-with-SQL
+│
+├── app.py
+│   └── Streamlit dashboard application
+│
+├── db_setup.py
+│   └── Creates SQLite database and analytical views
+│
+├── model.py
+│   └── Machine Learning model training and prediction
+│
+├── student_habits_performance.csv
+│   └── Main dataset used for analysis and modeling
+│
+├── MOCK_DATA.csv
+│   └── Additional sample data
+│
+├── students.db
+│   └── SQLite database containing processed data and SQL views
+│
+└── README.md
+    └── Project documentation
+```
