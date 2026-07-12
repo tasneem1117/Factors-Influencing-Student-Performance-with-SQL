@@ -2,9 +2,10 @@ import sqlite3
 import pandas as pd
 import os
 
+
 def init_database():
     print("🚀 Initializing Database and processing Milestones...")
-    
+
     # Milestone 1: Read CSVs & Load into SQLite Database
     try:
         df_habits = pd.read_csv('student_habits_performance.csv')
@@ -22,14 +23,14 @@ def init_database():
 
     conn = sqlite3.connect('students.db')
     cursor = conn.cursor()
-    
+
     # Save base data
     df_habits.to_sql('student_habits', conn, if_exists='replace', index=False)
     df_school.to_sql('school_info', conn, if_exists='replace', index=False)
     print("✅ Milestone 1: Data from both CSV files loaded into SQL successfully.")
 
     # --- Incorporating sql_depi.sql Logic (Corrected SQLite Translation) ---
-    
+
     # Milestone 2 & 3: Views and Data Cleaning
     cursor.execute("DROP VIEW IF EXISTS student_full_data;")
     cursor.execute("""
@@ -113,7 +114,7 @@ def init_database():
         risk_students_count INTEGER
     );
     """)
-    
+
     cursor.execute("DELETE FROM nightly_performance_summary;")
     cursor.execute("""
     INSERT INTO nightly_performance_summary (total_students, top_performers_count, risk_students_count)
@@ -133,6 +134,7 @@ def init_database():
     conn.commit()
     conn.close()
     print("🏁 Database setup complete! 'students.db' has been fully reconstructed.")
+
 
 if __name__ == "__main__":
     init_database()

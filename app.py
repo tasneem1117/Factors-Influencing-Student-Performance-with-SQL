@@ -1,8 +1,36 @@
 import streamlit as st
+import numpy as np
 import sqlite3
 import pandas as pd
 import plotly.express as px
 from model import train_model
+
+RECOMMENDATIONS = [
+    {
+        "condition": lambda s: s["study_hours_per_day"] < 3,
+        "message": "Increase study hours to at least 3-4 hours per day."
+    },
+    {
+        "condition": lambda s: s["attendance_percentage"] < 75,
+        "message": "Improve attendance. Students with attendance below 75% usually perform worse."
+    },
+    {
+        "condition": lambda s: s["sleep_hours"] < 6,
+        "message": "Try sleeping 7-8 hours every night."
+    },
+    {
+        "condition": lambda s: s["social_media_hours"] > 4,
+        "message": "Reduce social media usage."
+    },
+    {
+        "condition": lambda s: s["exercise_frequency"] < 2,
+        "message": "Exercise more frequently."
+    },
+    {
+        "condition": lambda s: s["mental_health_rating"] < 5,
+        "message": "Consider improving mental well-being."
+    }
+]
 
 # Helper function to query the local SQL database
 def query_db(query, params=()):
@@ -172,15 +200,15 @@ if page == "Dashboard":
                 env_data = pd.DataFrame({
                     "Environmental Factor": [
                         "Internet Quality",
-                        "School Type",              
-                        "Family Income Level",      
+                        "School Type",
+                        "Family Income Level",
                         "Diet Quality",
                         "Parental Education",
                         "Extracurriculars"
                     ],
                     "Status / Level": [
                         student["internet_quality"],
-                        student["school_type"],   
+                        student["school_type"],
                         student["family_income"],
                         student["diet_quality"],
                         student["parental_education_level"],
@@ -290,6 +318,8 @@ elif page == "AI Prediction":
         netflix = st.slider("Netflix Hours", 0.0, 12.0, 1.0)
         attendance = st.slider("Attendance Percentage", 0.0, 100.0, 85.0)
         sleep = st.slider("Sleep Hours", 0.0, 12.0, 7.0)
+        school_type = st.selectbox("School Type",["Public", "Private" , "International"])
+
 
     with col2:
         exercise = st.slider("Exercise Frequency", 0, 7, 3)
@@ -299,6 +329,7 @@ elif page == "AI Prediction":
         parental = st.selectbox("Parental Education", ["High School", "Bachelor", "Master", "PhD"])
         extracurricular = st.selectbox("Extracurricular Participation", ["Yes", "No"])
         part_time = st.selectbox("Part Time Job", ["Yes", "No"])
+        family_income = st.selectbox("Family Income",["Low", "Medium", "High"])
 
     st.divider()
 
@@ -319,11 +350,13 @@ elif page == "AI Prediction":
             "diet_quality": [diet],
             "parental_education_level": [parental],
             "extracurricular_participation": [extracurricular],
-            "part_time_job": [part_time]
+            "part_time_job": [part_time],
+            "school_type": [school_type],
+            "family_income": [family_income]
         })
 
         # Run pipeline prediction seamlessly
-        prediction = model.predict(student)[0]
+        prediction = float(np.clip(model.predict(student)[0], 0, 100))
         st.subheader("Prediction Result")
         st.metric(
             "Predicted Exam Score",
@@ -338,3 +371,16 @@ elif page == "AI Prediction":
             st.warning("Average performance. There is room for improvement.")
         else:
             st.error("High academic risk. Consider improving study habits and attendance.")
+
+        recommendations = []
+
+        for rule in RECOMMENDATIONS:
+            if rule["condition"](student.iloc[0]):
+                recommendations.append(rule["message"])
+
+        if recommendations:
+            st.subheader("Recommendations")
+            for rec in recommendations:
+                st.write("•", rec)
+        else:
+            st.success("No recommendations. Excellent habits!")
