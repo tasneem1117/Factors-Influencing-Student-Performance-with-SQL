@@ -375,7 +375,7 @@ elif page == "AI Prediction":
 
 
         
-      recommendations = []
+ recommendations = []
 
         for rule in RECOMMENDATIONS:
             if rule["condition"](student.iloc[0]):
