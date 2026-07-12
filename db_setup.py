@@ -4,21 +4,21 @@ import os
 
 
 def init_database():
-    print("🚀 Initializing Database and processing Milestones...")
+    print(" Initializing Database and processing Milestones...")
 
     # Milestone 1: Read CSVs & Load into SQLite Database
     try:
         df_habits = pd.read_csv('student_habits_performance.csv')
         df_habits.columns = [c.strip() for c in df_habits.columns]
     except FileNotFoundError:
-        print("❌ Error: 'student_habits_performance.csv' not found.")
+        print(" Error: 'student_habits_performance.csv' not found.")
         return
 
     try:
         df_school = pd.read_csv('MOCK_DATA.csv')
         df_school.columns = [c.strip() for c in df_school.columns]
     except FileNotFoundError:
-        print("❌ Error: 'MOCK_DATA.csv' not found.")
+        print(" Error: 'MOCK_DATA.csv' not found.")
         return
 
     conn = sqlite3.connect('students.db')
@@ -27,7 +27,7 @@ def init_database():
     # Save base data
     df_habits.to_sql('student_habits', conn, if_exists='replace', index=False)
     df_school.to_sql('school_info', conn, if_exists='replace', index=False)
-    print("✅ Milestone 1: Data from both CSV files loaded into SQL successfully.")
+    print("Milestone 1: Data from both CSV files loaded into SQL successfully.")
 
     # --- Incorporating sql_depi.sql Logic (Corrected SQLite Translation) ---
 
@@ -78,7 +78,7 @@ def init_database():
         GROUP BY student_id
     );
     """)
-    print("✅ Milestone 2 & 3: Data Cleaning & Unified Tables executed perfectly.")
+    print(" Milestone 2 & 3: Data Cleaning & Unified Tables executed perfectly.")
 
     # Recreate the Analytical Views pointing to the fully cleaned table
     cursor.execute("DROP VIEW IF EXISTS view_campus_averages;")
@@ -124,16 +124,16 @@ def init_database():
         SUM(CASE WHEN exam_score < 50 OR attendance_percentage < 75 THEN 1 ELSE 0 END)
     FROM student_cleaned;
     """)
-    print("✅ Milestone 4: Automated nightly metrics sync calculated.")
+    print(" Milestone 4: Automated nightly metrics sync calculated.")
 
     # Verification logging
     res_before = cursor.execute("SELECT COUNT(*) FROM student_full_data;").fetchone()[0]
     res_after = cursor.execute("SELECT COUNT(*) FROM student_cleaned;").fetchone()[0]
-    print(f"📊 Rows before cleaning: {res_before} | Rows after cleaning: {res_after}")
+    print(f"Rows before cleaning: {res_before} | Rows after cleaning: {res_after}")
 
     conn.commit()
     conn.close()
-    print("🏁 Database setup complete! 'students.db' has been fully reconstructed.")
+    print(" Database setup complete! 'students.db' has been fully reconstructed.")
 
 
 if __name__ == "__main__":
