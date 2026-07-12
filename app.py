@@ -375,7 +375,8 @@ elif page == "AI Prediction":
 
 
         
- recommendations = []
+# --- Properly Indented Recommendations Block ---
+        recommendations = []
 
         for rule in RECOMMENDATIONS:
             if rule["condition"](student.iloc[0]):
