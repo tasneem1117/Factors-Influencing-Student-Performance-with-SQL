@@ -172,12 +172,16 @@ if page == "Dashboard":
                 env_data = pd.DataFrame({
                     "Environmental Factor": [
                         "Internet Quality",
+                        "School Type",              
+                        "Family Income Level",      
                         "Diet Quality",
                         "Parental Education",
                         "Extracurriculars"
                     ],
                     "Status / Level": [
                         student["internet_quality"],
+                        student["school_type"],   
+                        student["family_income"],
                         student["diet_quality"],
                         student["parental_education_level"],
                         student["extracurricular_participation"]
