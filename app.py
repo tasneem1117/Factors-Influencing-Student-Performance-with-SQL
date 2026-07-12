@@ -5,32 +5,7 @@ import pandas as pd
 import plotly.express as px
 from model import train_model
 
-RECOMMENDATIONS = [
-    {
-        "condition": lambda s: s["study_hours_per_day"] < 3,
-        "message": "Increase study hours to at least 3-4 hours per day."
-    },
-    {
-        "condition": lambda s: s["attendance_percentage"] < 75,
-        "message": "Improve attendance. Students with attendance below 75% usually perform worse."
-    },
-    {
-        "condition": lambda s: s["sleep_hours"] < 6,
-        "message": "Try sleeping 7-8 hours every night."
-    },
-    {
-        "condition": lambda s: s["social_media_hours"] > 4,
-        "message": "Reduce social media usage."
-    },
-    {
-        "condition": lambda s: s["exercise_frequency"] < 2,
-        "message": "Exercise more frequently."
-    },
-    {
-        "condition": lambda s: s["mental_health_rating"] < 5,
-        "message": "Consider improving mental well-being."
-    }
-]
+
 
 # Helper function to query the local SQL database
 def query_db(query, params=()):
@@ -372,6 +347,34 @@ elif page == "AI Prediction":
         else:
             st.error("High academic risk. Consider improving study habits and attendance.")
 
+RECOMMENDATIONS = [
+    {
+        "condition": lambda s: s["study_hours_per_day"] < 3,
+        "message": "Increase study hours to at least 3-4 hours per day."
+    },
+    {
+        "condition": lambda s: s["attendance_percentage"] < 75,
+        "message": "Improve attendance. Students with attendance below 75% usually perform worse."
+    },
+    {
+        "condition": lambda s: s["sleep_hours"] < 6,
+        "message": "Try sleeping 7-8 hours every night."
+    },
+    {
+        "condition": lambda s: s["social_media_hours"] > 4,
+        "message": "Reduce social media usage."
+    },
+    {
+        "condition": lambda s: s["exercise_frequency"] < 2,
+        "message": "Exercise more frequently."
+    },
+    {
+        "condition": lambda s: s["mental_health_rating"] < 5,
+        "message": "Consider improving mental well-being."
+    }
+]
+
+        
         recommendations = []
 
         for rule in RECOMMENDATIONS:
