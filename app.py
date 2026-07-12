@@ -375,7 +375,7 @@ elif page == "AI Prediction":
 
 
         
-# --- Properly Indented Recommendations Block ---
+
         recommendations = []
 
         for rule in RECOMMENDATIONS:
