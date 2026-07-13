@@ -105,27 +105,27 @@ def init_database():
     GROUP BY internet_quality, diet_quality;
     """)
 
-    # Milestone 4: Nightly performance summary configuration
+   # Milestone 4: Nightly performance summary configuration (UPDATED)
+    cursor.execute("DROP TABLE IF EXISTS nightly_performance_summary;")
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS nightly_performance_summary (
+    CREATE TABLE nightly_performance_summary (
         date_calculated TEXT DEFAULT CURRENT_DATE,
         total_students INTEGER,
-        top_performers_count INTEGER,
-        risk_students_count INTEGER
+        above_average_count INTEGER,
+        below_average_count INTEGER
     );
     """)
 
-    cursor.execute("DELETE FROM nightly_performance_summary;")
     cursor.execute("""
-    INSERT INTO nightly_performance_summary (total_students, top_performers_count, risk_students_count)
+    INSERT INTO nightly_performance_summary (total_students, above_average_count, below_average_count)
     SELECT 
         COUNT(student_id),
-        SUM(CASE WHEN exam_score >= 85 THEN 1 ELSE 0 END),
-        SUM(CASE WHEN exam_score < 50 OR attendance_percentage < 75 THEN 1 ELSE 0 END)
+        SUM(CASE WHEN exam_score > (SELECT AVG(exam_score) FROM student_cleaned) THEN 1 ELSE 0 END),
+        SUM(CASE WHEN exam_score < (SELECT AVG(exam_score) FROM student_cleaned) THEN 1 ELSE 0 END)
     FROM student_cleaned;
     """)
-    print(" Milestone 4: Automated nightly metrics sync calculated.")
-
+    print(" Milestone 4: Updated nightly metrics calculated (Above/Below Campus Average).")
+    
     # Verification logging
     res_before = cursor.execute("SELECT COUNT(*) FROM student_full_data;").fetchone()[0]
     res_after = cursor.execute("SELECT COUNT(*) FROM student_cleaned;").fetchone()[0]
