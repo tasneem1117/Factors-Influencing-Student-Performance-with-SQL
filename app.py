@@ -64,9 +64,17 @@ try:
     automation_df = query_db("SELECT * FROM nightly_performance_summary")
     if not automation_df.empty:
         last_run = automation_df.iloc[0]
+        
+        # Sidebar header & info block
+        st.sidebar.subheader("Cohort Quick Stats")
         st.sidebar.caption(f"**SQL Nightly Automation Sync:** {last_run['date_calculated']}")
-        st.sidebar.caption(f"Total Cohort Size: {last_run['total_students']} students")
-except Exception:
+        
+        # Displaying the updated metrics clearly
+        st.sidebar.write(f" **Total Cohort Size:** {last_run['total_students']} students")
+        st.sidebar.write(f"**Above Average:** {last_run['above_average_count']} students")
+        st.sidebar.write(f"**Below Average:** {last_run['below_average_count']} students")
+        st.sidebar.markdown("---")
+except Exception as e:
     pass
 
 # --- Sidebar Search ---
