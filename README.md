@@ -13,6 +13,14 @@ The project combines:
 - Machine Learning prediction
 - Automated performance summaries
 
+Project Milestones : 
+- Milestone 1: Data Collection, Exploration & Preprocessing• Load educational datasets into a database.
+* Explore key relationships.
+- Milestone 2: Model / System Development & Evaluation• Build analytical queries for hypothesis testing.
+- Milestone 3: Deployment (Real-Time or Batch)• Structure stored procedures for repeat analysis.
+- Milestone 4: MLOps / Monitoring / Automation• Automate nightly query runs.
+- Milestone 5: Final Documentation, Demo & Presentation• Document insights with SQL examples.
+
 
 ---
 
