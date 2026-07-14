@@ -21,7 +21,8 @@ Project Milestones :
 - Milestone 4: MLOps / Monitoring / Automation• Automate nightly query runs.
 - Milestone 5: Final Documentation, Demo & Presentation• Document insights with SQL examples.
 
-
+PROJECT LINK:
+https://factors-influencing-student-performance-with-sql-dgbhpkgwpczev.streamlit.app/
 ---
 
 # Project Features
